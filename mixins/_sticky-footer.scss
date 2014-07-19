@@ -1,0 +1,14 @@
+// TODO - Find a fix for IE (currently causes horizontal scroll)
+@mixin sticky-footer($fix: false) {
+  display: table;
+  width: 100%;
+  height: 100%;
+  &__block {
+      display: table-row;
+      height: 1px;
+      width: 100%;
+      &--push {
+        height: auto;
+      }
+  }
+}

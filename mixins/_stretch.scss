@@ -1,0 +1,6 @@
+@mixin stretch($centered: false, $position: absolute, $coordinates: null null null null) {
+  @if $centered {
+    margin: auto;
+  }
+  @include position($position, $coordinates);
+}

@@ -1,0 +1,54 @@
+$units_used: ();
+$baseline: 5px!default;
+
+
+@function vr($units: 8) {
+  @return $units * $baseline;
+}
+
+@for $i from 0 through 100 {
+  %push-#{$i} { padding-top: vr($i); }
+  %push-down-#{$i} { padding-bottom: vr($i); }
+  %pull-#{$i} { margin-top: -(vr($i)); }
+  %pull-down-#{$i} { margin-bottom: -(vr($i)); }
+  %tall-#{$i} { height: vr($i); }
+}
+
+@mixin vr($top, $bottom: 0, $height: false) {
+  // TODO - find a way to do this on hover maybe?
+  
+  // body.debug & {
+  //   outline: 1px solid red;
+  //   position: relative;
+  //   &::before {
+  //     top: 0;
+  //     left: 0;
+  //     position: absolute;
+  //     display: inline-block;
+  //     background: #8e44ad;
+  //     color: #fff;
+  //     padding: 5px;
+  //     font-size: 10px;
+  //     content: "" + $units + "";
+  //   }
+  // }
+  @if not index($units_used, $top) {
+    $units_used: append($units_used, $top);
+  }
+  
+  @if $top >= 0 {
+    @extend %push-#{$top};
+  } @else {
+    @extend %pull-#{abs($top)};
+  }
+
+  @if $bottom >= 0 {
+    @extend %push-down-#{$bottom};
+  } @else {
+    @extend %pull-down-#{abs($bottom)};
+  }
+  // TODO - test this
+  @if $height {
+    @extend %tall-#{$height};
+  }
+}

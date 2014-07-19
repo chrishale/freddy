@@ -1,0 +1,13 @@
+// TODO - Do we need pos rel?
+@mixin underlined($bottom: 2px) {
+  position: relative;
+  &:after {
+    position: absolute;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    content: '';
+    display: block;
+    left: 0; right: 0;
+    bottom: -($bottom);
+  }
+}

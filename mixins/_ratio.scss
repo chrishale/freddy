@@ -1,0 +1,13 @@
+@mixin ratio($ratio: 1 1) {
+  height: 0;
+  $padding: 0;
+  @if $ratio == square {
+    $padding: 100%;
+  } @else {
+    @if length($ratio) < 2 or length($ratio) > 2 {
+      @warn "Please pass two values for the ratio mixin";
+    }
+    $padding: percentage(nth($ratio, 2) / nth($ratio, 1));
+  }
+  padding-bottom: $padding;
+}

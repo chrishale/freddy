@@ -1,0 +1,21 @@
+// Maybe use class?
+%breakout {
+  margin-left: -9999em;
+  margin-right: -9999em;
+  padding-left: 9999em;
+  padding-right: 9999em;
+}
+
+@mixin wrapper($width) {
+  // TODO use grid-span for breakpoints?
+  width: 100%;
+  max-width: $width;
+  margin: 0 auto;
+  padding: 0 $gutter;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  &__breakout {
+    @extend %breakout;
+  }
+}

@@ -1,0 +1,43 @@
+$themes: ();
+
+a { color: inherit; text-decoration: none; }
+
+* {
+  border-color: inherit;
+  background-color: inherit;
+  color: inherit;
+}
+
+@mixin hover {
+  a:hover &,
+  & a:hover,
+  & .hit:hover,
+  .hit:hover & {
+    @content;
+    @include pseudos {
+      @content;
+    }
+  }
+}
+
+@mixin active {
+  a.active &,
+  & a.active,
+  & .hit.active,
+  .hit.active & {
+    @content;
+    @include pseudos {
+      @content;
+    }
+  }
+}
+
+
+// TODO do we really need this any more?
+@mixin theme($name) {
+  $themes: append($themes, $name)!global;
+  .#{$name} {
+      @content;
+  }
+}
+

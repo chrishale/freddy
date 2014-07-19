@@ -1,0 +1,88 @@
+// TODO - look at using bourbons grid helpers for width
+
+$columns: 12!default;
+$gutter: 40px!default;
+
+@mixin grid-span($widths) {
+  @if type-of($widths) == list {
+    // if its a list with conditions like (condition unit, condition unit)
+    @each $width in $widths {
+      @if length($width) > 1 {
+        @include when(nth($width, 1)) {
+          @include grid-span(nth($width, 2));
+        }
+      } @else {
+        @include grid-span($width);
+      }
+    }
+  } @else {
+    // else its a single width unit
+    @if $widths == flex or $widths == auto {
+      width: auto;
+    } @else if unitless($widths) {
+      width: 100% / ($columns / $widths);
+    } @else {
+      width: $widths;
+    }
+  }
+}
+
+@mixin grid($width: auto, 
+            $gutter: $gutter,
+            $rhythm: 0,
+            $align: left,
+            $vertical-align: top,
+            $element: "item",
+            $reversed: false,
+            $modifiers: ()) {
+
+  display: block;
+  text-align: $align;
+  margin-left: -($gutter);
+  @include vr(($rhythm * -1));
+  font-size: 0;
+  @if $reversed { direction: rtl; }
+  @content;
+  
+  &__#{$element} {
+    @if $reversed { direction: ltr; }
+    @include box-sizing(border-box);
+    padding-left: $gutter;
+    @if unitless($rhythm) {
+      @include vr($rhythm);
+    } @else {
+      padding-top: $rhythm;
+    }
+    font-size: medium;
+    display: inline-block;
+    vertical-align: $vertical-align;
+    text-align: left;
+    
+    @include grid-span($width);
+
+    // output the modifiers
+    @if length($modifiers) > 0 {
+      @if length(nth($modifiers, 1)) == 1 {
+        &--#{nth($modifiers, 1)} {
+          @include grid-span(nth($modifiers, 2));
+        }
+      } @else {
+        @each $modifier in $modifiers {
+          @if length($modifier) > 1 {
+            &--#{nth($modifier, 1)} {
+              @include grid-span(nth($modifier, 2));
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// TODO
+@mixin make-grid($type: wizardry) {
+  .grid {
+    @include grid;
+  }
+}

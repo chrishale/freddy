@@ -1,0 +1,22 @@
+{
+  "name": "freddy",
+  "version": "0.0.1",
+  "authors": [
+    "Chris Hale <chris@strobedigital.com>"
+  ],
+  "description": "A front end development bootstrap of powerful mixins for SCSS",
+  "main": "freddy.scss",
+  "keywords": [
+    "scss"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "bower_components"
+  ],
+  "devDependencies": {
+    "bourbon": "~4.0.2",
+    "modularized-normalize-scss": "~3.0.1"
+  }
+}

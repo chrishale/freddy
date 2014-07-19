@@ -1,0 +1,24 @@
+//************************************************************************//
+// Helper function for joining a list with a separator.
+// Source: http://hugogiraudel.com/2013/08/08/advanced-sass-list-functions/
+//************************************************************************//
+
+@function to-string($list, $glue: '', $is-nested: false) {
+  $result: null;
+
+  @if length($list) == 0 { @return ""; }
+
+  @for $i from 1 through length($list) {
+    $e: nth($list, $i);
+
+    @if type-of($e) == list {
+      $result: $result#{to-string($e, $glue, true)};
+    }
+    
+    @else {
+      $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+    }
+  }
+
+  @return $result;
+}

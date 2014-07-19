@@ -1,0 +1,60 @@
+// TODO - rename these and test
+
+@mixin tuck($top, $bottom) {
+  &:before, &:after {
+    content: '';
+    display: block;
+  }
+  &:before {
+    margin-top: $top;
+  }
+  &:after {
+    margin-top: $bottom;
+    height: 1px;
+  }
+  // Have the same consistency in spacing on browsers
+  // which don't support :before/:after
+  .no-generatedcontent & {
+    margin-top: $top;
+    margin-bottom: $bottom;
+    zoom: 1;
+  }
+}
+
+@mixin no-tuck() {
+  &:before,
+  &:after {
+    display: none;
+  }
+  .no-generatedcontent & {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+%t_base {
+  &:first-child {
+    padding-top: 0;
+  }
+  // Support nesting of typographic elements
+  // ... this allows lists to act properly
+  // ... and general do some other cool shit.
+  *:first-child:before {
+    display: none;
+  }
+  *:last-child:after {
+    display: none;
+  }
+  .no-generatedcontent & {
+    *:first-child {
+      margin-top: 0;
+    }
+    *:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+h1, h2, h3, h4, h4, h6, p, pre, ol, dl, ul, dd {
+  @extend %t_base;
+}
