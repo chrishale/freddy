@@ -1,3 +1,19 @@
+/* 
+  Pseudos Mixin
+  -------------
+  A mixin for targeting the :before and :after pseudos of a selector.
+
+  Example SCSS:
+  -------------
+  .block {
+    @include pseudos {
+      content: '';
+      display: block;
+    }
+  }
+
+*/
+
 @mixin pseudos {
   &:after,
   &:before {

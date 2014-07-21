@@ -1,3 +1,41 @@
+/* 
+  When Mixin
+  ----------
+  A mixin for selecting css with conditions.
+  
+  Arguments:
+  ----------
+  $conditions: (list of conditions)
+    - Here you can pass in any of the following:
+      > Breakpoint key, taken from the $breakpoints list. e.g. small
+      > Media query as a string. e.g. "(max-width: 900px)"
+      > Modernizr detection class. e.g. opacity
+
+  Example SCSS:
+  -------------
+  .block {
+    width: 300px;
+    @include when(small) { width: 100%; }
+    opacity: 0;
+    @include when(no-opacity) { display: none; }
+    &--active {
+      opacity: 1;
+      @include when(no-opacity) { display: block; }
+    }
+  }
+  
+  
+  Example HTML:
+  -------------
+  <div class="block block--active">
+  </div>
+
+  TODO:
+  -----
+  - Add support for 'or' breakpoints
+
+*/
+
 $global-feature-selectors: ();
 
 $breakpoints: (
@@ -32,12 +70,6 @@ $breakpoints: (
         }
       }
 
-      // its a js state
-      @if str-slice($condition, 1, 3) == "is-" {
-        $not-found: false;
-        $state-selectors: append($state-selectors, $condition);
-      }
-
       // its a modernizr feature
       @if $not-found {
         @if not index($global-feature-selectors, $condition) {
@@ -49,10 +81,8 @@ $breakpoints: (
 
     $feature-selector: to-string($feature-selectors, '.');
     $media-query: to-string($media-queries, ' and ');
-    $state-selector: to-string($state-selectors, '.');
-    $parent: if(str-length($state-selector) > 0, "."+$state-selector, '');
     
-    &#{$parent} {
+    & {
       @if str-length($media-query) > 0 {
         @media only screen and #{$media-query} {
           @if str-length($feature-selector) > 0 {

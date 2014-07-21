@@ -1,20 +1,50 @@
+/* 
+  Debug Mixin
+  -----------
+  Outputs debug information to a :before element on the body. Must have debug class on <html> or <body> elements.
+  Note. Must be placed at the very bottom of your SCSS file.
+  
+  Arguments:
+  ----------
+  $modernizr: (true|false)
+    - When true: outputs a list of all Modernizr detect's are being used in your stylesheet via the `when` mixin.
+  $vertical-rhythms: (true|false)
+    - When true: outputs a list of all values you are using with the `vr` mixin.
+  $at: (top|bottom)
+    - Changes where the debug is outputted.
+
+  Example SCSS:
+  -------------
+  ....
+  @include debug($modernizr: false, $vertical-rhythms: true);
+  >>>>> EOF
+  
+  Example HTML:
+  -------------
+  <!DOCTYPE html>
+  <html lang="en" class="debug">
+  ...
+
+*/
+
 $debug: ();
-// TODO - sepreate for top and bottom debuggers
-@mixin debug {
+
+@mixin debug($modernizr: true, $vertical-rhythms: true, $at: top) {
   @content;  
   
   // add Modernizr detects
-  $debug: append($debug, "Using the following Modernizr detects: \A " + to-string($global-feature-selectors, ' \A ')) !global;
+  @if $modernizr {
+    $debug: append($debug, "Using the following Modernizr detects: \A " + to-string($global-feature-selectors, ' \A ')) !global;
+  }
   
   // vertical rhythms
-  $debug: append($debug, "Using the following vertical rhythms: \A " + to-string($units_used, ' \A ')) !global;
-  
-  // themes
-  $debug: append($debug, "Using the following themes: \A " + to-string($themes, ' \A ')) !global;
+  @if $vertical-rhythms {
+    $debug: append($debug, "Using the following vertical rhythms: \A " + to-string($units_used, ' \A ')) !global;
+  }
   
   body.debug,
   .debug body {
-    &:before {
+    &:#{if($at == top, 'before', 'after')} {
       display: block;
       background: #e74c3c;
       font-family: "Courier New", Courier, monospace;
@@ -22,21 +52,8 @@ $debug: ();
       padding: 20px;
       white-space: pre;
       content: quote("— " + to-string($debug, "\A\A— "));
-      border-bottom: 5px solid #fff;
-      box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
-      position: relative;
-      z-index: 999;
-    }
-    &:after {
-      display: block;
-      background: #e74c3c;
-      font-family: "Courier New", Courier, monospace;
-      color: #fff;
-      padding: 20px;
-      white-space: pre;
-      content: quote("— " + to-string($debug, "\A\A— "));
-      border-bottom: 5px solid #fff;
-      box-shadow: 0px 1px 2px rgba(0,0,0,0.2);
+      border-#{if($at == top, 'bottom', 'top')}: 5px solid #fff;
+      box-shadow: 0px #{if($at == top, '1px', '-1px')} 2px rgba(0,0,0,0.2);
       position: relative;
       z-index: 999;
     }

@@ -1,6 +1,41 @@
-// TODO support for break points
+/* 
+  Bar Mixin
+  ---------
+  A horizontal single line bar layout with `main` and `aux` modifiers, for aligning content; center and right respectively.
+  
+  Arguments:
+  ----------
+  $fixed: (true|false)
+    - When true: items fit to equal widths within parent container
+    - When false: item's width is based on content
+  $vertical-align: (top*|middle|bottom|baseline)  
+    - Aligns the items to one another.
+  $element: ("")
+    - The class name of the element in BEM syntax.
 
-@mixin bar($element: 'item', $fixed: true, $vertical-align: top) {
+  Example SCSS:
+  -------------
+  .navigation-bar {
+    @include bar($element: 'link');
+  }
+  
+  Example HTML:
+  -------------
+  <div class="navigation-bar">
+    <div class="navigation-bar__link">
+      Menu
+    </div>
+    <div class="navigation-bar__link navigation-bar__link--main">
+      Logo
+    </div>
+    <div class="navigation-bar__link navigation-bar__link--aux">
+      Logout
+    </div>
+  </div>
+
+*/
+
+@mixin bar($fixed: true, $vertical-align: top, $element: 'item') {
   display: table;
   width: 100%;
   table-layout: if($fixed, fixed, auto);

@@ -1,4 +1,49 @@
-// TODO - look at using bourbons grid helpers for width
+/* 
+  Grid Mixin
+  ----------
+  A responsive grid mixin for creating multiple types of grids based on; fixed columns or flexible widths.
+  
+  Arguments:
+  ----------
+  $width: (auto|12|50%|(50%, small 100%))
+    - Here you can pass in multiple different styles of arguments;
+      > `auto` or `flex` will make the grid items have a flexible width (based on their content).
+      > Single number; e.g. 12, 6. This will work out a percentage from your $columns mixin: 12 => 100%, 6 => 50%.
+      > Unitized value; e.g. 300px, 50%, 10em. This will give each grid item a fixed width.
+      > Lastly, you can pass a list of values in the format of: (width, condition width, condition width) where condition is a key used for the `when` mixin. One item in the list can ommit the condition to provide a default. The width values can beformatted in as either; auto, single number or a value with a unit (as above).
+        - e.g (4, medium 6, small 100%) or mobile-first: (12, medium 6, large-and-up 4)
+  $gutter: ($gutter|30)
+    - Adds a gutter between each grid item. Defaults to the global $gutter value, but can be overidden with any value with a unit.
+  $rhythm: 0
+    - Adds vertical space between items that stack onto more than one line. Either a value with a unit: e.g. 20px, or a number of baseline units (via the `vr` mixin).
+  $align: (left|center|right)
+    - Aligns the grid items within it's container. Defaults to left.
+  $vertical-align: (top|middle|bottom)
+    - Aligns the grid items vertically, when they differ in height. Defaults to top.
+  $element: "item"
+    - The class name of the element in BEM syntax.
+  $reversed: (true|false)
+    - Reverses the layout of the grid items without having to change source order in the DOM.
+  $modifiers: (main 8, aux 4)
+    - Here you can provide modifiers for the grid items in the format of (modifier width, modifier width). e.g. (main 8, aux 4) Which would produce the classes; .grid__item--main and .grid__item--aux, with the respective widths. Widths can be formatted in the same way as the $width argument (as above). e.g. (main (8, medium 12, small 12), aux (4, medium 12, small 12)).
+
+  Example SCSS:
+  -------------
+  .nav {
+    @include grid(auto, $gutter: 30px, $align: center, $vertical-align: middle);
+  }
+  
+  
+  Example HTML:
+  -------------
+  <div class="nav">
+    <div class="nav__item"><a href="#">Home</a></div>
+    <div class="nav__item"><a href="#">About</a></div>
+    <div class="nav__item"><a href="#">Service</a></div>
+    <div class="nav__item"><a href="#">Contact</a></div>
+  </div>
+
+*/
 
 $columns: 12!default;
 $gutter: 40px!default;
@@ -76,13 +121,5 @@ $gutter: 40px!default;
         }
       }
     }
-  }
-}
-
-
-// TODO
-@mixin make-grid($type: wizardry) {
-  .grid {
-    @include grid;
   }
 }

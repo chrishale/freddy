@@ -4,7 +4,7 @@
   "authors": [
     "Chris Hale <chris@strobedigital.com>"
   ],
-  "description": "A front end development bootstrap of powerful mixins for SCSS",
+  "description": "A collection of SCSS mixins and guidelines for front end development",
   "main": "freddy.scss",
   "keywords": [
     "scss"

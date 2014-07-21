@@ -22,3 +22,30 @@ a { color: inherit; text-decoration: none; }
 @import "mixins/underlined";
 @import "mixins/sticky-footer";
 @import "mixins/stretch";
+
+.grid {
+  @include grid(auto, $modifiers: (
+    one-whole 100%,
+    
+    one-half 50%,
+    
+    one-third 33.3333%,
+    two-thirds 66.666%,
+    
+    one-quarter 25%,
+    two-quarters 50%,
+    three-quarters 75%,
+    
+    one-fifth 20%,
+    two-fifths 40%,
+    three-fifths 60%,
+    four-fifths 80%,
+    
+    one-sixth 16.666%,
+    two-sixths 33.333%,
+    three-sixths 50%,
+    four-sixths 66.666%,
+    five-sixths 83.333%
+    
+  ));
+}

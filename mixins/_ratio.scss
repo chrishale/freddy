@@ -1,3 +1,21 @@
+/* 
+  Ratio Mixin
+  -----------
+  A mixin for basing an elements height on its width via a ratio. Useful for responsive elements where the width could changed.
+
+  Arguments:
+  ----------
+  $ratio: (width height)
+    - Aspect ratio e.g. (16 9), (4 3)
+
+  Example SCSS:
+  -------------
+  .video {
+    @include ratio(16 9);
+  }
+
+*/
+
 @mixin ratio($ratio: 1 1) {
   height: 0;
   $padding: 0;
