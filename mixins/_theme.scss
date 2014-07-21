@@ -8,11 +8,11 @@ a { color: inherit; text-decoration: none; }
   color: inherit;
 }
 
-@mixin hover {
+@mixin hover($pseudo-anchor-class: 'hit') {
   a:hover &,
   & a:hover,
-  & .hit:hover,
-  .hit:hover & {
+  & .#{$pseudo-anchor-class}:hover,
+  .#{$pseudo-anchor-class}:hover & {
     @content;
     @include pseudos {
       @content;
@@ -20,11 +20,11 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-@mixin active-class($class: active) {
+@mixin active-class($class: active, $pseudo-anchor-class: 'hit') {
   a.#{$class} &,
   & a.#{$class},
-  & .hit.#{$class},
-  .hit.#{$class} & {
+  & .#{$pseudo-anchor-class}.#{$class},
+  .#{$pseudo-anchor-class}.#{$class} & {
     @content;
     @include pseudos {
       @content;
