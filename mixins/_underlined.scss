@@ -1,3 +1,27 @@
+/* 
+  Underlined Mixin
+  ----------------
+  A mixin for for adding a underline to an element, with the option of changing the distance from the baseline.
+
+  Arguments:
+  ----------
+  $bottom: (2px)
+    - A unitive value (distance from baseline).
+
+  Example SCSS:
+  -------------
+  .link {
+    span { @include underlined(1px); }
+  }
+
+  Example HTML:
+  -------------
+  <a href="#" class="link">
+    <span>Click me</span>
+  </a>
+
+*/
+
 // TODO - Do we need pos rel?
 @mixin underlined($bottom: 2px) {
   position: relative;

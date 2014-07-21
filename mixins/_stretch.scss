@@ -1,6 +1,40 @@
-@mixin stretch($centered: false, $position: absolute, $coordinates: null null null null) {
+/* 
+  Stretch Mixin
+  -------------
+  A mixin for stretching an element to the size of its relative parent.
+
+  Arguments:
+  ----------
+  $centered: (true|false)
+    - Adds margin:auto which centers the element inside the relative parent (if a width/height is set).
+  $coordinates: (top right bottom left)
+    - Stretch padding from the edge of the relative parent.
+  
+
+  Example SCSS:
+  -------------
+  .block {
+    position: relative;
+    @include ratio(1 1);
+    &__stretch {
+      @include stretch;
+      z-index: 1;
+    }
+  }
+
+  Example HTML:
+  -------------
+  <div class="block">
+    <div class="block__stretch">
+      I'm the width and height of block
+    </div>
+  </div>
+
+*/
+
+@mixin stretch($centered: false, $coordinates: 0 0 0 0) {
   @if $centered {
     margin: auto;
   }
-  @include position($position, $coordinates);
+  @include position("absolute", $coordinates);
 }

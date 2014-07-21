@@ -1,3 +1,31 @@
+/* 
+  Tweak Mixin
+  -----------
+  A mixin for for transforming an element. Useful for pixel perfect design tweaks.
+
+  Arguments:
+  ----------
+  $xy: (0 0)
+    - A list of cooridinets to move the element by. In the format of (X Y).
+
+  Example SCSS:
+  -------------
+  .icon {
+    vertical-align: middle;
+    display: inline-block;
+    width: 20px; height: 20px;
+    background: red;
+    @include tweak(0 -1);
+  }
+
+  Example HTML:
+  -------------
+  <div class="button">
+    <div class="icon"></div> Click me
+  </div>
+
+*/
+
 @mixin tweak($xy: 0 0) {
   @if length($xy) < 2 or length($xy) > 2 {
     @warn "Please pass two values for the tweak mixin";

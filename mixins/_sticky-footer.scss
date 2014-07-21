@@ -1,5 +1,29 @@
+/* 
+  Sticky Footer Mixin
+  -------------------
+  A mixin for creating a sticky footer layout.
+
+  Example SCSS:
+  -------------
+  .sticky {
+    @include sticky-footer;
+  }
+
+  Example HTML:
+  -------------
+  <div class="sticky">
+    <div class="sticky__block sticky__block--push">
+      I'm up top
+    </div>
+    <div class="sticky__block">
+      I'm down bottom
+    </div>
+  </div>
+
+*/
+
 // TODO - Find a fix for IE (currently causes horizontal scroll)
-@mixin sticky-footer($fix: false) {
+@mixin sticky-footer() {
   display: table;
   width: 100%;
   height: 100%;
