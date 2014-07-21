@@ -20,24 +20,25 @@ a { color: inherit; text-decoration: none; }
   }
 }
 
-@mixin active {
-  a.active &,
-  & a.active,
-  & .hit.active,
-  .hit.active & {
+@mixin active-class($class: active) {
+  a.#{$class} &,
+  & a.#{$class},
+  & .hit.#{$class},
+  .hit.#{$class} & {
     @content;
     @include pseudos {
       @content;
     }
   }
 }
-
-
-// TODO do we really need this any more?
-@mixin theme($name) {
-  $themes: append($themes, $name)!global;
-  .#{$name} {
-      @content;
+@mixin active {
+  @include active-class(active) {
+    @content;
+  }
+}
+@mixin current {
+  @include active-class(current) {
+    @content;
   }
 }
 
