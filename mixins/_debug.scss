@@ -6,12 +6,12 @@
   
   Arguments:
   ----------
+  $at: (top|bottom)
+    - Changes where the debug is outputted.
   $modernizr: (true|false)
     - When true: outputs a list of all Modernizr detect's are being used in your stylesheet via the `when` mixin.
   $vertical-rhythms: (true|false)
     - When true: outputs a list of all values you are using with the `vr` mixin.
-  $at: (top|bottom)
-    - Changes where the debug is outputted.
 
   Example SCSS:
   -------------
@@ -29,7 +29,7 @@
 
 $debug: ();
 
-@mixin debug($modernizr: true, $vertical-rhythms: true, $at: top) {
+@mixin debug($at: top, $modernizr: true, $vertical-rhythms: true) {
   @content;  
   
   // add Modernizr detects

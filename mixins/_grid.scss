@@ -7,13 +7,14 @@
   ----------
   $width: (auto|12|50%|(50%, small 100%))
     - Here you can pass in multiple different styles of arguments;
-      > `auto` or `flex` will make the grid items have a flexible width (based on their content).
-      > Single number; e.g. 12, 6. This will work out a percentage from your $columns mixin: 12 => 100%, 6 => 50%.
-      > Unitized value; e.g. 300px, 50%, 10em. This will give each grid item a fixed width.
-      > Lastly, you can pass a list of values in the format of: (width, condition width, condition width) where condition is a key used for the `when` mixin. One item in the list can ommit the condition to provide a default. The width values can beformatted in as either; auto, single number or a value with a unit (as above).
+      + `auto` or `flex` will make the grid items have a flexible width (based on their content).
+      + Key from the $grid-sizes list.
+      + Single number; e.g. 12, 6. This will work out a percentage from your $grid-columns mixin: 12 => 100%, 6 => 50%.
+      + Unitized value; e.g. 300px, 50%, 10em. This will give each grid item a fixed width.
+      + Lastly, you can pass a list of values in the format of: (width, condition width, condition width) where condition is a key used for the `when` mixin. One item in the list can ommit the condition to provide a default. The width values can beformatted in as either; auto, single number or a value with a unit (as above).
         - e.g (4, medium 6, small 100%) or mobile-first: (12, medium 6, large-and-up 4)
-  $gutter: ($gutter|30)
-    - Adds a gutter between each grid item. Defaults to the global $gutter value, but can be overidden with any value with a unit.
+  $gutter: ($grid-gutter|30)
+    - Adds a gutter between each grid item. Defaults to the global $grid-gutter value, but can be overidden with any value with a unit.
   $rhythm: 0
     - Adds vertical space between items that stack onto more than one line. Either a value with a unit: e.g. 20px, or a number of baseline units (via the `vr` mixin).
   $align: (left|center|right)
@@ -30,7 +31,7 @@
   Example SCSS:
   -------------
   .nav {
-    @include grid(auto, $gutter: 30px, $align: center, $vertical-align: middle);
+    @include grid(auto, $grid-gutter: 30px, $align: center, $vertical-align: middle);
   }
   
   
@@ -45,8 +46,61 @@
 
 */
 
-$columns: 12!default;
-$gutter: 40px!default;
+$grid-columns: 12!default;
+$grid-gutter: 40px!default;
+$grid-sizes: (
+  one-whole 100%,
+
+  one-half 50%,
+
+  one-third 33.333%,
+  two-thirds 66.666%,
+
+  one-quarter 25%,
+  two-quarters one-half,
+  three-quarters 75%,
+
+  one-fifth 20%,
+  two-fifths 40%,
+  three-fifths 60%,
+  four-fifths 80%,
+
+  one-sixth 16.666%,
+  two-sixths one-third,
+  three-sixths one-half,
+  four-sixths two-thirds,
+  five-sixths 83.333%,
+
+  one-eighth 12.5%,
+  two-eighths one-quarter,
+  three-eighths 37.5%,
+  four-eighths one-half,
+  five-eighths 62.5%,
+  six-eighths three-quarters,
+  seven-eighths 87.5%,
+
+  one-tenth 10%,
+  two-tenths one-fifth,
+  three-tenths 30%,
+  four-tenths two-fifths,
+  five-tenths one-half,
+  six-tenths three-fifths,
+  seven-tenths 70%,
+  eight-tenths four-fifths,
+  nine-tenths 90%,
+
+  one-twelfth 8.333%,
+  two-twelfths one-sixth,
+  three-twelfths one-quarter,
+  four-twelfths one-third,
+  five-twelfths 41.666,
+  six-twelfths one-half,
+  seven-twelfths 58.333%,
+  eight-twelfths two-thirds,
+  nine-twelfths three-quarters,
+  ten-twelfths five-sixths,
+  eleven-twelfths 91.666%
+)!default;
 
 @mixin grid-span($widths) {
   @if type-of($widths) == list {
@@ -64,8 +118,14 @@ $gutter: 40px!default;
     // else its a single width unit
     @if $widths == flex or $widths == auto {
       width: auto;
+    } @else if type-of($widths) == string {
+      @each $size in $grid-sizes {
+        @if $widths == nth($size, 1) {
+          @include grid-span(nth($size, 2));
+        }
+      }
     } @else if unitless($widths) {
-      width: 100% / ($columns / $widths);
+      width: 100% / ($grid-columns / $widths);
     } @else {
       width: $widths;
     }
@@ -73,7 +133,7 @@ $gutter: 40px!default;
 }
 
 @mixin grid($width: auto, 
-            $gutter: $gutter,
+            $gutter: $grid-gutter,
             $rhythm: 0,
             $align: left,
             $vertical-align: top,
@@ -83,7 +143,7 @@ $gutter: 40px!default;
 
   display: block;
   text-align: $align;
-  margin-left: -($gutter);
+  margin-left: -($grid-gutter);
   @include vr(($rhythm * -1));
   font-size: 0;
   @if $reversed { direction: rtl; }
@@ -92,7 +152,7 @@ $gutter: 40px!default;
   &__#{$element} {
     @if $reversed { direction: ltr; }
     @include box-sizing(border-box);
-    padding-left: $gutter;
+    padding-left: $grid-gutter;
     @if unitless($rhythm) {
       @include vr($rhythm);
     } @else {
