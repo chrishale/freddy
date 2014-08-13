@@ -22,3 +22,9 @@ a { color: inherit; text-decoration: none; }
 @import "mixins/underlined";
 @import "mixins/sticky-footer";
 @import "mixins/stretch";
+
+%ir {
+  text-indent: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}

@@ -36,5 +36,5 @@
   @if $centered {
     margin: auto;
   }
-  @include position("absolute", $coordinates);
+  @include position(absolute, $coordinates);
 }

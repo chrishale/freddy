@@ -133,6 +133,45 @@ $grid-sizes: (
   }
 }
 
+@mixin grid-gutter($gutters, $element) {
+  @if type-of($gutters) == list {
+    // if its a list with conditions like (condition unit, condition unit)
+    @each $gutter in $gutters {
+      @if length($gutter) > 1 {
+        @include when(nth($gutter, 1)) {
+          @include grid-gutter(nth($gutter, 2), $element);
+        }
+      } @else {
+        @include grid-gutter($gutter, $element);
+      }
+    }
+  } @else {
+    // else its a single gutter unit
+    @if $gutters == flex or $gutters == auto {
+      margin-left: 0;
+      &__#{$element} {
+        padding-left: auto;
+      }
+    } @else if type-of($gutters) == string {
+      @each $size in $grid-sizes {
+        @if $gutters == nth($size, 1) {
+          @include grid-gutter(nth($size, 2), $element);
+        }
+      }
+    } @else if unitless($gutters) {
+      margin-left: -(100% / ($grid-columns / $gutters));
+      &__#{$element} {
+        padding-left: 100% / ($grid-columns / $gutters);
+      }
+    } @else {
+      margin-left: -($gutters);
+      &__#{$element} {
+        padding-left: $gutters;
+      }
+    }
+  }
+}
+
 @mixin grid($width: auto, 
             $gutter: $grid-gutter,
             $rhythm: 0,
@@ -144,16 +183,18 @@ $grid-sizes: (
 
   display: block;
   text-align: $align;
-  margin-left: -($grid-gutter);
+  
   @include vr(($rhythm * -1));
+  
   font-size: 0;
   @if $reversed { direction: rtl; }
   @content;
   
+  @include grid-gutter($gutter, $element);
+
   &__#{$element} {
     @if $reversed { direction: ltr; }
     @include box-sizing(border-box);
-    padding-left: $grid-gutter;
     @if unitless($rhythm) {
       @include vr($rhythm);
     } @else {

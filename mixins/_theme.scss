@@ -4,8 +4,23 @@ a { color: inherit; text-decoration: none; }
 
 * {
   border-color: inherit;
-  background-color: inherit;
   color: inherit;
+  @include pseudos {
+    border-color: inherit;
+    color: inherit;
+  }
+}
+
+@mixin links($pseudo-anchor-class: 'hit') {
+  a &,
+  & a,
+  & .#{$pseudo-anchor-class},
+  .#{$pseudo-anchor-class} & {
+    @content;
+    @include pseudos {
+      @content;
+    }
+  }
 }
 
 @mixin hover($pseudo-anchor-class: 'hit') {
@@ -41,4 +56,10 @@ a { color: inherit; text-decoration: none; }
     @content;
   }
 }
+
+@mixin border($side: left, $width: 1px, $style: solid) {
+  border-#{$side}-width: $width;
+  border-#{$side}-style: solid;
+}
+
 

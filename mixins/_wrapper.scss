@@ -6,12 +6,13 @@
   padding-right: 9999em;
 }
 
-@mixin wrapper($width) {
+@mixin wrapper($width, $padding: $grid-gutter) {
   // TODO use grid-span for breakpoints?
+  background: transparent;
   width: 100%;
   max-width: $width;
   margin: 0 auto;
-  padding: 0 $grid-gutter;
+  padding: 0 $padding;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
