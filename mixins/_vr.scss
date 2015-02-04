@@ -37,18 +37,18 @@ $baseline: 5px!default;
   }
   
   @if $top >= 0 {
-    @extend %push-#{$top};
+    padding-top: vr($top);
   } @else {
-    @extend %pull-#{abs($top)};
+    margin-top: -(vr(abs($top)));
   }
 
   @if $bottom >= 0 {
-    @extend %push-down-#{$bottom};
+    padding-bottom: vr($bottom);
   } @else {
-    @extend %pull-down-#{abs($bottom)};
+    margin-bottom: -(vr(abs($bottom)));
   }
   // TODO - test this
   @if $height {
-    @extend %tall-#{$height};
+    height: vr($height);
   }
 }
