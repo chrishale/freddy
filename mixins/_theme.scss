@@ -24,10 +24,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 @mixin hover($pseudo-anchor-class: 'hit') {
-  a:hover &,
-  & a:hover,
-  & .#{$pseudo-anchor-class}:hover,
-  .#{$pseudo-anchor-class}:hover & {
+  .no-touch a:hover &,
+  .no-touch & a:hover,
+  .no-touch & .#{$pseudo-anchor-class}:hover,
+  .no-touch .#{$pseudo-anchor-class}:hover & {
     @content;
     @include pseudos {
       @content;

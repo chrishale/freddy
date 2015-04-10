@@ -36,15 +36,15 @@ $baseline: 5px!default;
     $units_used: append($units_used, $top);
   }
   
-  @if $top >= 0 {
+  @if $top > 0 {
     padding-top: vr($top);
-  } @else {
+  } @else if $top < 0 {
     margin-top: -(vr(abs($top)));
   }
 
-  @if $bottom >= 0 {
+  @if $bottom > 0 {
     padding-bottom: vr($bottom);
-  } @else {
+  } @else if $bottom < 0 {
     margin-bottom: -(vr(abs($bottom)));
   }
   // TODO - test this
